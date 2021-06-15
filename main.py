@@ -102,6 +102,7 @@ if __name__ == '__main__':
 
             # Main game loop. Runs until there is a winner.
             while winner == 0:
+                # TODO: Handle tie game situations.
                 # Loop until the user makes a valid move.
                 valid_move = 0
                 while valid_move == 0:
@@ -130,15 +131,22 @@ if __name__ == '__main__':
 
                 # Only process computer move if user has not yet won.
                 if not winner:
-                    # TODO: Add computer move here
+                    # TODO: Use some basic strategy here.
+                    # Scan for open spot
+                    for play_area in range(0, 8):
+                        if game_board[play_area] == " ":
+                            print(f"Computer plays {play_area + 1}.")
+                            game_board[play_area] = "O"
+                            display_game_board(game_board)
+                            break
 
                     if check_for_winner(game_board, "O"):
                         winner = 2
 
             # Display the winner
             if winner and winner == 1:
-                print("X wins!")
+                print("You Win!")
             elif winner and winner == 2:
-                print("O wins!")
+                print("Computer Wins!")
 
     # Done!
