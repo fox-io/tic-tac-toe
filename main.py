@@ -58,15 +58,8 @@ def display_game_board(board):
     ''')
 
 
-if __name__ == '__main__':
-
-    # Flag for gameplay loop
-    winner = 0
-    user_move = 0
-
+def show_help():
     print('''
-    Tic-Tac-Toe
-    -----------
     Use the digits 1-9 to select squares.
     1|2|3
     -----
@@ -75,51 +68,77 @@ if __name__ == '__main__':
     7|8|9
     ''')
 
-    # TODO: Add menu
 
-    # Clear our game board and show the initial state.
-    game_board = empty_game_board
-    display_game_board(game_board)
+def show_menu():
+    print('''
+    [P]lay Game
+    [H]elp
+    [Q]uit
+    ''')
+    return input("Your choice: ").upper()
 
-    # Main game loop. Runs until there is a winner.
-    while winner == 0:
-        # Loop until the user makes a valid move.
-        valid_move = 0
-        while valid_move == 0:
-            # Get the user's move.
-            user_move = 0
-            user_move = int(input("Enter your move: "))
 
-            # Check that the move submitted is valid.
-            # It must be between 1 and 9, as well as an empty space.
-            if user_move < 1 or user_move > 9:
-                print("Please choose a square between 1 and 9.")
-            else:
-                valid_move = check_move(user_move, game_board)
-                if valid_move == 0:
-                    print("That square is already taken. Try again.")
+if __name__ == '__main__':
 
-        # We have a valid move at this point, so set the space to X and redisplay the game board
-        game_board[user_move - 1] = "X"
-        display_game_board(game_board)
+    # Flag for gameplay loop
+    winner = 0
+    user_move = 0
+    menu_choice = ""
 
-        # Check to see if the move just made wins the game.
-        # If X has won, winner == 1, if O has won, winner == 2
-        # We only check for X win here. O wins are checked after the computer takes its turn.
-        if check_for_winner(game_board, "X"):
-            winner = 1
+    # Show title
+    print("Tic-Tac-Toe")
 
-        # Only process computer move if user has not yet won.
-        if not winner:
-            # TODO: Add computer move here
+    # Show menu
+    while menu_choice != "Q":
+        menu_choice = show_menu()
+        if menu_choice == "H":
+            show_help()
+        elif menu_choice == "Q":
+            print("Goodbye!")
+        elif menu_choice == "P":
+            # Clear our game board and show the initial state.
+            game_board = empty_game_board
+            display_game_board(game_board)
 
-            if check_for_winner(game_board, "O"):
-                winner = 2
+            # Main game loop. Runs until there is a winner.
+            while winner == 0:
+                # Loop until the user makes a valid move.
+                valid_move = 0
+                while valid_move == 0:
+                    # Get the user's move.
+                    user_move = 0
+                    user_move = int(input("Enter your move: "))
 
-    # Display the winner
-    if winner and winner == 1:
-        print("X wins!")
-    elif winner and winner == 2:
-        print("O wins!")
+                    # Check that the move submitted is valid.
+                    # It must be between 1 and 9, as well as an empty space.
+                    if user_move < 1 or user_move > 9:
+                        print("Please choose a square between 1 and 9.")
+                    else:
+                        valid_move = check_move(user_move, game_board)
+                        if valid_move == 0:
+                            print("That square is already taken. Try again.")
+
+                # We have a valid move at this point, so set the space to X and redisplay the game board
+                game_board[user_move - 1] = "X"
+                display_game_board(game_board)
+
+                # Check to see if the move just made wins the game.
+                # If X has won, winner == 1, if O has won, winner == 2
+                # We only check for X win here. O wins are checked after the computer takes its turn.
+                if check_for_winner(game_board, "X"):
+                    winner = 1
+
+                # Only process computer move if user has not yet won.
+                if not winner:
+                    # TODO: Add computer move here
+
+                    if check_for_winner(game_board, "O"):
+                        winner = 2
+
+            # Display the winner
+            if winner and winner == 1:
+                print("X wins!")
+            elif winner and winner == 2:
+                print("O wins!")
 
     # Done!
