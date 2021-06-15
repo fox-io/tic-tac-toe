@@ -2,14 +2,6 @@
 # 2021.06.14
 # https://gitlab.com/foxdata-io/tic-tac-toe
 
-
-# Store board as a list
-def empty_game_board(board):
-    for space in range(0, 8):
-        board[space] = " "
-    return board
-
-
 def check_for_tie(board):
     spaces_available = 9
     for space in range(0, 8):
@@ -142,6 +134,10 @@ if __name__ == '__main__':
                 # Only process computer move if user has not yet won.
                 if not winner:
                     # TODO: Use some basic strategy here.
+                    # 1. Go for winning play if available.
+                    # 2. Go for blocking play if available.
+                    # 3. ???
+
                     # Scan for open spot
                     for play_area in range(0, 8):
                         if game_board[play_area] == " ":
