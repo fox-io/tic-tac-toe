@@ -4,7 +4,18 @@
 
 
 # Store board as a list
-empty_game_board = list((" ", " ", " ", " ", " ", " ", " ", " ", " "))
+def empty_game_board(board):
+    for space in range(0, 8):
+        board[space] = " "
+    return board
+
+
+def check_for_tie(board):
+    spaces_available = 9
+    for space in range(0, 8):
+        if board[space] != " ":
+            spaces_available -= 1
+    return spaces_available == 0
 
 
 def check_for_winner(board, player):
@@ -19,22 +30,22 @@ def check_for_winner(board, player):
         elif board[1] == player:
             if board[2] == player:
                 return 1
-    elif board[1] == player:
+    if board[1] == player:
         if board[4] == player:
             if board[7] == player:
                 return 1
-    elif board[2] == player:
+    if board[2] == player:
         if board[5] == player:
             if board[8] == player:
                 return 1
         elif board[4] == player:
             if board[6] == player:
                 return 1
-    elif board[3] == player:
+    if board[3] == player:
         if board[4] == player:
             if board[5] == player:
                 return 1
-    elif board[6] == player:
+    if board[6] == player:
         if board[7] == player:
             if board[8] == player:
                 return 1
@@ -97,17 +108,16 @@ if __name__ == '__main__':
             print("Goodbye!")
         elif menu_choice == "P":
             # Clear our game board and show the initial state.
-            game_board = empty_game_board
+            winner = 0
+            game_board = list((" ", " ", " ", " ", " ", " ", " ", " ", " ",))
             display_game_board(game_board)
 
             # Main game loop. Runs until there is a winner.
             while winner == 0:
-                # TODO: Handle tie game situations.
                 # Loop until the user makes a valid move.
                 valid_move = 0
                 while valid_move == 0:
                     # Get the user's move.
-                    user_move = 0
                     user_move = int(input("Enter your move: "))
 
                     # Check that the move submitted is valid.
@@ -143,10 +153,15 @@ if __name__ == '__main__':
                     if check_for_winner(game_board, "O"):
                         winner = 2
 
+                if check_for_tie(game_board):
+                    break
+
             # Display the winner
             if winner and winner == 1:
                 print("You Win!")
             elif winner and winner == 2:
                 print("Computer Wins!")
+            elif winner == 0:
+                print("Tie Game!")
 
     # Done!
