@@ -7,24 +7,37 @@
 empty_game_board = list((" ", " ", " ", " ", " ", " ", " ", " ", " "))
 
 
-def check_for_winner(board):
-    # TODO: Determine which player wins. Currently only looks for ANY winner.
-    if board[0] != " " and board[0] == board[3] and board[0] == board[6]:
-        return 1
-    elif board[1] != " " and board[1] == board[4] and board[1] == board[7]:
-        return 1
-    elif board[2] != " " and board[2] == board[5] and board[2] == board[8]:
-        return 1
-    elif board[2] != " " and board[2] == board[4] and board[2] == board[6]:
-        return 1
-    elif board[0] != " " and board[0] == board[4] and board[0] == board[8]:
-        return 1
-    elif board[0] != " " and board[0] == board[1] and board[0] == board[2]:
-        return 1
-    elif board[3] != " " and board[3] == board[4] and board[3] == board[5]:
-        return 1
-    elif board[6] != " " and board[6] == board[7] and board[6] == board[8]:
-        return 1
+def check_for_winner(board, player):
+    # Using the provided player ("X" or "O"), determine if there is a winner.
+    if board[0] == player:
+        if board[3] == player:
+            if board[6] == player:
+                return 1
+        elif board[4] == player:
+            if board[8] == player:
+                return 1
+        elif board[1] == player:
+            if board[2] == player:
+                return 1
+    elif board[1] == player:
+        if board[4] == player:
+            if board[7] == player:
+                return 1
+    elif board[2] == player:
+        if board[5] == player:
+            if board[8] == player:
+                return 1
+        elif board[4] == player:
+            if board[6] == player:
+                return 1
+    elif board[3] == player:
+        if board[4] == player:
+            if board[5] == player:
+                return 1
+    elif board[6] == player:
+        if board[7] == player:
+            if board[8] == player:
+                return 1
     return 0
 
 
@@ -51,29 +64,62 @@ if __name__ == '__main__':
     winner = 0
     user_move = 0
 
-    print("Tic-Tac-Toe")
+    print('''
+    Tic-Tac-Toe
+    -----------
+    Use the digits 1-9 to select squares.
+    1|2|3
+    -----
+    4|5|6
+    -----
+    7|8|9
+    ''')
 
     # TODO: Add menu
 
-    # Clear our game board
+    # Clear our game board and show the initial state.
     game_board = empty_game_board
+    display_game_board(game_board)
 
+    # Main game loop. Runs until there is a winner.
     while winner == 0:
-        print("Checking for winner")
+        # Loop until the user makes a valid move.
         valid_move = 0
         while valid_move == 0:
-            print("No winner yet")
-            display_game_board(game_board)
+            # Get the user's move.
             user_move = 0
             user_move = int(input("Enter your move: "))
+
+            # Check that the move submitted is valid.
+            # It must be between 1 and 9, as well as an empty space.
             if user_move < 1 or user_move > 9:
                 print("Please choose a square between 1 and 9.")
             else:
-                print("Checking for valid move")
                 valid_move = check_move(user_move, game_board)
                 if valid_move == 0:
-                    print("You cannot choose that square. Try again.")
-        print("Setting user move to X")
+                    print("That square is already taken. Try again.")
+
+        # We have a valid move at this point, so set the space to X and redisplay the game board
         game_board[user_move - 1] = "X"
-        winner = check_for_winner(game_board)
-        # TODO: Add computer move
+        display_game_board(game_board)
+
+        # Check to see if the move just made wins the game.
+        # If X has won, winner == 1, if O has won, winner == 2
+        # We only check for X win here. O wins are checked after the computer takes its turn.
+        if check_for_winner(game_board, "X"):
+            winner = 1
+
+        # Only process computer move if user has not yet won.
+        if not winner:
+            # TODO: Add computer move here
+
+            if check_for_winner(game_board, "O"):
+                winner = 2
+
+    # Display the winner
+    if winner and winner == 1:
+        print("X wins!")
+    elif winner and winner == 2:
+        print("O wins!")
+
+    # Done!
