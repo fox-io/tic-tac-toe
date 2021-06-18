@@ -1,13 +1,8 @@
-# Tic-Tac-Toe Game
-# 2021.06.14
-# https://gitlab.com/foxdata-io/tic-tac-toe
-
-def check_for_tie(board):
-    spaces_available = 9
-    for space in range(0, 8):
-        if board[space] != " ":
-            spaces_available -= 1
-    return spaces_available == 0
+"""
+Tic-Tac-Toe Game
+2021.06.14
+https://gitlab.com/foxdata-io/tic-tac-toe
+"""
 
 
 def check_for_winner(board, player):
@@ -131,6 +126,11 @@ if __name__ == '__main__':
                 if check_for_winner(game_board, "X"):
                     winner = 1
 
+                # Determine if the game has ended in a tie. If the board is full, and there is no
+                # current winner, then the game is a tie and must end.
+                if game_board.count(" ") == 0:
+                    break
+
                 # Only process computer move if user has not yet won.
                 if not winner:
                     # TODO: Use some basic strategy here.
@@ -149,8 +149,10 @@ if __name__ == '__main__':
                     if check_for_winner(game_board, "O"):
                         winner = 2
 
-                if check_for_tie(game_board):
-                    break
+                    # Determine if the game has ended in a tie. If the board is full, and there is no
+                    # current winner, then the game is a tie and must end.
+                    if game_board.count(" ") == 0:
+                        break
 
             # Display the winner
             if winner and winner == 1:
