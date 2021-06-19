@@ -105,7 +105,7 @@ if __name__ == '__main__':
                     if user_move < 1 or user_move > 9:
                         print("Please choose a square between 1 and 9.")
                     else:
-                        valid_move = game_board[user_move-1] == " "
+                        valid_move = game_board[user_move - 1] == " "
                         if not valid_move:
                             print("That square is already taken. Try again.")
 
@@ -121,7 +121,7 @@ if __name__ == '__main__':
 
                 # Determine if the game has ended in a tie. If the board is full, and there is no
                 # current winner, then the game is a tie and must end.
-                if game_board.count(" ") == 0:
+                if not winner and game_board.count(" ") == 0:
                     break
 
                 # Only process computer move if user has not yet won.
@@ -144,7 +144,7 @@ if __name__ == '__main__':
 
                     # Determine if the game has ended in a tie. If the board is full, and there is no
                     # current winner, then the game is a tie and must end.
-                    if game_board.count(" ") == 0:
+                    if not winner and game_board.count(" ") == 0:
                         break
 
             # Display the winner
