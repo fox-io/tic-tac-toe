@@ -2,6 +2,8 @@
 Tic-Tac-Toe Game
 2021.06.14
 https://gitlab.com/foxdata-io/tic-tac-toe
+
+TODO: Implement computer player decision making
 """
 
 
@@ -93,7 +95,7 @@ if __name__ == '__main__':
             display_game_board(game_board)
 
             # Main game loop. Runs until there is a winner.
-            while winner == 0:
+            while not winner:
                 # Loop until the user makes a valid move.
                 valid_move = False
                 while not valid_move:
@@ -126,11 +128,6 @@ if __name__ == '__main__':
 
                 # Only process computer move if user has not yet won.
                 if not winner:
-                    # TODO: Use some basic strategy here.
-                    # 1. Go for winning play if available.
-                    # 2. Go for blocking play if available.
-                    # 3. ???
-
                     # Scan for open spot
                     for play_area in range(0, 8):
                         if game_board[play_area] == " ":
@@ -148,11 +145,11 @@ if __name__ == '__main__':
                         break
 
             # Display the winner
-            if winner and winner == 1:
+            if winner == 1:
                 print("You Win!")
-            elif winner and winner == 2:
+            elif winner == 2:
                 print("Computer Wins!")
-            elif winner == 0:
+            elif not winner:
                 print("Tie Game!")
 
     # Done!
