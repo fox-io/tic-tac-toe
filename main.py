@@ -39,13 +39,6 @@ def check_for_winner(board, player):
     return 0
 
 
-def check_move(move, board):
-    if board[move-1] == " ":
-        return 1
-    else:
-        return 0
-
-
 def display_game_board(board):
     print(f'''
 {board[0]}|{board[1]}|{board[2]}
@@ -102,8 +95,8 @@ if __name__ == '__main__':
             # Main game loop. Runs until there is a winner.
             while winner == 0:
                 # Loop until the user makes a valid move.
-                valid_move = 0
-                while valid_move == 0:
+                valid_move = False
+                while not valid_move:
                     # Get the user's move.
                     user_move = int(input("Enter your move: "))
 
@@ -112,8 +105,8 @@ if __name__ == '__main__':
                     if user_move < 1 or user_move > 9:
                         print("Please choose a square between 1 and 9.")
                     else:
-                        valid_move = check_move(user_move, game_board)
-                        if valid_move == 0:
+                        valid_move = game_board[user_move-1] == " "
+                        if not valid_move:
                             print("That square is already taken. Try again.")
 
                 # We have a valid move at this point, so set the space to X and redisplay the game board
